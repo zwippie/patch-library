@@ -1,0 +1,2 @@
+# The directory NPM downloads your dependencies sources to.
+/node_modules/

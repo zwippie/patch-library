@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Patch Library</title>
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="/app.css"/>
+  </head>
+  <body>
+    <main role="main" class="container">
+      <h1>Behringer Neutron</h1>
+
+      <form accept-charset="UTF-8" action="/patches" enctype="multipart/form-data" method="post">
+      <input id="patch_data" name="patch[data]" type="hidden" value="{}">
+        <section class="row row-front-panel">
+          <canvas id="front-panel" data-device="behringer-neutron" width="1598" height="530"></canvas>
+        </section>
+
+        <p>
+          Use your mouse to drag cables between outputs and inputs, turn the knobs, press the switches.
+          Enter a title and your name, perhaps some notes and an audio preview, then save your patch.
+          Create the same cable twice to remove it.
+        </p>
+
+        <section class="patch-details">
+          <fieldset>
+
+            <div class="row">
+              <div class="column column-50">
+                <label>Patch Cables</label>
+                <p id="patch-cable-output"></p>
+              </div>
+            </div>
+          </fieldset>
+        </section>
+
+      </form>
+
+      <footer>
+        <br/>
+        <br/>
+        <p>copyright <em>zwippie <small>at</small> gmail <small>dot</small> com</em></p>
+      </footer>
+    </main>
+
+    <script type="text/javascript" src="/app.js"></script>
+  </body>
+</html>

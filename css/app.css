@@ -1,0 +1,55 @@
+@import "./milligram.css";
+
+body {
+  background-color: #3b393b;
+  color: #e9e9e9;
+  margin-top: 2em;
+}
+
+.navigation {
+  background: #f4f5f6;
+  border-bottom: .1rem solid #d1d1d1;
+  display: block;
+  min-height: 6rem;
+  max-width: 100%;
+  width: 100%;
+  padding-top: 1rem;
+  margin-bottom: 2rem;
+}
+.navigation .nav-link {
+  margin-left: 2rem;
+  display: inline-block;
+  margin-top: 0.6rem;
+}
+
+.container {
+  padding: 0 2.0rem;
+  position: relative;
+}
+
+@media (min-width: 1600px) {
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+}
+
+h1 {
+  text-align: center;
+}
+
+.row-front-panel {
+  width: 1700px;
+}
+
+/* Center when larger than frontpanel image */
+@media (min-width: 1600px) {
+  .row-front-panel {
+    margin-left: -227px;
+  }
+}
+
+canvas#canvas {
+  touch-action: none;
+}
