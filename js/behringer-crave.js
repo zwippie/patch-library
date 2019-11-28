@@ -49,6 +49,7 @@ const CONNECTORS = [
     {idx: 29, col: 13, row: 1, x: 1177, y: 175, name: "KB", input: false},
     {idx: 30, col: 14, row: 1, x: 1247, y: 175, name: "GATE", input: false},
     {idx: 31, col: 15, row: 1, x: 1310, y: 175, name: "VCF", input: false},
+    {idx: 32, col: 16, row: 0, x: 1373, y: 110, name: "PHONES", input: false},
 ]
 const KNOBS = [
   {idx: 0, x: 140, y: 293, type: "large", name: "FREQUENCY"},
@@ -79,7 +80,7 @@ const TOGGLES = [
   {idx: 5, x: 998, y: 375, type: "twoway", name: "VCF MOD SOURCE"},
   {idx: 6, x: 645, y: 475, type: "twoway", name: "SUSTAIN"},
   {idx: 7, x: 1344, y: 375, type: "twoway", name: "VCA MODE"},
-  {idx: 8, x: 1980, y: 375, type: "twoway", name: "VCF MOD POLARITY"}
+  {idx: 8, x: 1170, y: 375, type: "twoway", name: "VCF MOD POLARITY"}
 ]
 const TOGGLE_TYPES = {
   twoway: {values: ["left", "right"]}
@@ -107,7 +108,7 @@ export class BehringerCrave extends FrontPanel {
         height: TOGGLE_HEIGHT
       },
       initialValues: {
-        knobValues: Array(14).fill(150),
+        knobValues: Array(15).fill(158),
         toggleValues: Array(9).fill(0)
       },
       images: {
