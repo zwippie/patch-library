@@ -91,10 +91,8 @@ const KNOBS = [
   {idx: 30, x: 1531, y: 323, type: "small", name: "MIX3 LVL 2"},
 ]
 
-// Not sure why radius has to be 90, but after some trial and error I found 
-// it works best in this case (hitboxes of different knobs won't overlap when I choose 90)
 const KNOB_TYPES = {
-  small: {radius: 90, limit: 280} 
+  small: {radius: 25, limit: 280} 
 }
 const TOGGLES = [
   {idx: 0, x: 195, y: 533, type: "horizthree", name: "SEQ STEPS"},
@@ -113,8 +111,8 @@ const TOGGLE_TYPES = {
   vertthree: {values: ["up", "center", "down"]}
 }
 
-const TOGGLE_WIDTH = 50 // This is not working in the way I would expect...
-const TOGGLE_HEIGHT = 0 // If I don't set this to 0, the toggle hitbox interferes with elements below the toggle...
+const TOGGLE_WIDTH = 40
+const TOGGLE_HEIGHT = 40
 
 const initialKnobValues = function() {
   let knobValues = Array(31).fill(140)
@@ -142,7 +140,7 @@ export class EricaPicoIII extends FrontPanel {
       },
       initialValues: {
         knobValues: initialKnobValues(),
-        toggleValues: Array(19).fill(0)
+        toggleValues: Array(8).fill(0)
       },
       images: {
         panel: "/images/pico-iii/pico-iii-front.png",
