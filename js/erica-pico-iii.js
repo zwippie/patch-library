@@ -3,18 +3,18 @@ import { FrontPanel } from "./front-panel"
 const CANVAS_WIDTH = 1650;
 const CANVAS_HEIGHT = 892;
 const CABLE_WIDTH = 8;
-const CELL_RADIUS = 50;
+const CELL_RADIUS = 18;
 const CONNECTORS = [
   {idx: 0, x: 438, y: 390, name: "CLK IN", input: true},
-  {idx: 1, x: 438, y: 450, name: "SEQ CV OUT", input: false},
-  // {idx: 2, x: 339, y: 430, name: "VCO1 1V/OCT", input: true},
-  // {idx: 3, x: 339, y: 540, name: "PWM CV", input: true},
-  // {idx: 4, x: 339, y: 650, name: "VCO1 PULSE", input: false},
-  // {idx: 5, x: 339, y: 755, name: "VCO1 TRI", input: false},
-  // {idx: 6, x: 445, y: 430, name: "EXP FM", input: true},
-  // {idx: 7, x: 445, y: 540, name: "VCA CV", input: true},
-  // {idx: 8, x: 445, y: 650, name: "IN/LIN FM", input: true},
-  // {idx: 9, x: 445, y: 755, name: "VCA OUT", input: false},
+  {idx: 1, x: 438, y: 455, name: "SEQ CV OUT", input: false},
+  {idx: 2, x: 505, y: 260, name: "VCO1 1V/OCT", input: true},
+  {idx: 3, x: 505, y: 325, name: "PWM CV", input: true},
+  {idx: 4, x: 505, y: 390, name: "VCO1 PULSE", input: false},
+  {idx: 5, x: 505, y: 455, name: "VCO1 TRI", input: false},
+  {idx: 6, x: 570, y: 260, name: "EXP FM", input: true},
+  {idx: 7, x: 570, y: 325, name: "VCA CV", input: true},
+  {idx: 8, x: 570, y: 390, name: "IN/LIN FM", input: true},
+  {idx: 9, x: 570, y: 455, name: "VCA OUT", input: false},
   // {idx: 10, x: 555, y: 430, name: "VCO2 1V/OCT", input: true},
   // {idx: 11, x: 555, y: 540, name: "SHAPE CV", input: true},
   // {idx: 12, x: 555, y: 650, name: "VCO2 SHAPE", input: false},
@@ -64,9 +64,9 @@ const KNOBS = [
   {idx: 3, x: 438, y: 275, type: "small", name: "SEQ 4"},
   {idx: 4, x: 505, y: 68, type: "small", name: "TUNE 1"},
   {idx: 5, x: 505, y: 132, type: "small", name: "PWM"},
-  // {idx: 6, x: 446, y: 112, type: "small", name: "EXP FM"},
-  // {idx: 7, x: 446, y: 215, type: "small", name: "LIN FM"},
-  // {idx: 8, x: 446, y: 325, type: "small", name: "VCA OFFS"},
+  {idx: 6, x: 569, y: 67, type: "small", name: "EXP FM"},
+  {idx: 7, x: 569, y: 128, type: "small", name: "LIN FM"},
+  {idx: 8, x: 569, y: 195, type: "small", name: "VCA OFFS"},
   // {idx: 9, x: 555, y: 112, type: "small", name: "TUNE 2"},
   // {idx: 10, x: 555, y: 215, type: "small", name: "SHAPE"},
   // {idx: 11, x: 663, y: 112, type: "small", name: "MIX1 LVL 1"},
@@ -96,13 +96,13 @@ const KNOB_TYPES = {
 }
 const TOGGLES = [
   {idx: 0, x: 416, y: 322, type: "horizthree", name: "SEQ STEPS"},
-  // {idx: 1, x: 288, y: 290, type: "vertthree", name: "VCO1 OCT"},
-  // {idx: 2, x: 504, y: 290, type: "vertthree", name: "VCO2 OCT"},
-  // {idx: 3, x: 822, y: 290, type: "verttwo", name: "EG1 LOOP/FREE"},
-  // {idx: 4, x: 932, y: 290, type: "verttwo", name: "EG2 LOOP/FREE"},
-  // {idx: 5, x: 1065, y: 290, type: "verttwo", name: "LPG1 VCA/VCF"},
-  // {idx: 6, x: 1174, y: 290, type: "verttwo", name: "LPG2 VCA/VCF"},
-  // {idx: 7, x: 1275, y: 400, type: "horizthree", name: "SEQ STEPS"},
+  {idx: 1, x: 475, y: 173, type: "vertthree", name: "VCO1 OCT"},
+  {idx: 2, x: 604, y: 173, type: "vertthree", name: "VCO2 OCT"},
+  {idx: 3, x: 797, y: 173, type: "verttwo", name: "EG1 LOOP/FREE"},
+  {idx: 4, x: 862, y: 173, type: "verttwo", name: "EG2 LOOP/FREE"},
+  {idx: 5, x: 945, y: 173, type: "verttwo", name: "LPG1 VCA/VCF"},
+  {idx: 6, x: 1010, y: 173, type: "verttwo", name: "LPG2 VCA/VCF"},
+  {idx: 7, x: 1072, y: 240, type: "horizthree", name: "SEQ STEPS"},
 ]
 const TOGGLE_TYPES = {
   horiztwo: {values: ["left", "right"]},
@@ -111,8 +111,8 @@ const TOGGLE_TYPES = {
   vertthree: {values: ["up", "center", "down"]}
 }
 
-const TOGGLE_WIDTH = 40
-const TOGGLE_HEIGHT = 40
+const TOGGLE_WIDTH = 25
+const TOGGLE_HEIGHT = 25
 
 const initialKnobValues = function() {
   let knobValues = Array(31).fill(140)
