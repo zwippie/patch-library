@@ -56,6 +56,7 @@ const CONNECTORS = [
   {idx: 48, x: 1226, y: 325, name: "MIX3 IN 2", input: true},
   {idx: 49, x: 1226, y: 390, name: "MIX3 OUT", input: false},
   {idx: 50, x: 1226, y: 455, name: "MIX3 SUM OUT", input: false},
+  {idx: 51, x: 1226, y: 65, name: "MASTER OUT (STEREO)", input: false},
 ];
 const KNOBS = [
   {idx: 0, x: 438, y: 67, type: "small", name: "SEQ 1"},
