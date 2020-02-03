@@ -81,6 +81,11 @@ class FrontPanel {
     this.toggleValues = initialValues.toggleValues || []
     this.lightValues = initialValues.lightValues || {}
 
+    // make deep copies of default values
+    this.knobDefaults = Object.assign([], this.knobValues)
+    this.buttonDefaults = Object.assign([], this.buttonValues)
+    this.toggleDefaults = Object.assign([], this.toggleValues)
+    this.lightDefaults = Object.assign({}, this.lightValues);
 
     // Init
     this.loadPatchData();
@@ -317,12 +322,18 @@ class FrontPanel {
       this.knobs.forEach(knob => {
         const knobType = this.knobTypes[knob.type];
         if (this.isIntersect(pos, knob, knobType.radius)) {
-          // console.log("mousedown" + knob.name);
-          this.turning = true;
-          this.turnKnobIdx = knob.idx;
-          this.turnPreviousY = pos.y;
-          this.turnOldValue = knob.value;
-          this.turnNewValue = knob.value;
+           console.log("mousedown" + knob.name);
+          if (e.which == 2) {
+            this.turning = false;
+            this.knobValues[knob.idx] = this.knobDefaults[knob.idx];
+          }
+          else {
+            this.turning = true;
+            this.turnKnobIdx = knob.idx;
+            this.turnPreviousY = pos.y;
+            this.turnOldValue = knob.value;
+            this.turnNewValue = knob.value;
+          }
           this.requestRedraw()
         }
       })
@@ -330,8 +341,14 @@ class FrontPanel {
       this.buttons.forEach(button => {
         const circle = {x: button.x + this.buttonOptions.width / 2, y: button.y + this.buttonOptions.height / 2}
         if (this.isIntersect(pos, circle, this.buttonOptions.width)) {
-          // Call handler in subclass
-          this.onButtonClick(button)
+          if (e.which == 2) {
+            this.buttonValues[button.idx] = this.buttonDefaults[button.idx];
+            this.lightValues[button.name] = this.lightDefaults[button.name];
+          }
+          else {
+            // Call handler in subclass
+            this.onButtonClick(button)
+          }
           this.updatePatchCableOutput()
           this.requestRedraw()
         }
@@ -340,7 +357,12 @@ class FrontPanel {
       this.toggles.forEach(toggle => {
         const circle = {x: toggle.x + this.toggleOptions.width / 2, y: toggle.y + this.toggleOptions.height / 2}
         if (this.isIntersect(pos, circle, this.toggleOptions.width)) {
-          this.onToggleClick(toggle)
+          if (e.which == 2) {
+            this.toggleValues[toggle.idx] = this.toggleDefaults[toggle.idx];
+          }
+          else {
+            this.onToggleClick(toggle)
+          }
           this.updatePatchCableOutput()
           this.requestRedraw()
         }
