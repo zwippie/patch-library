@@ -231,7 +231,7 @@ class FrontPanel {
           const from = this.connectors[fromIdx];
           const to = this.connectors[toIdx];
           const color = connection.color;
-return `${from.name}<span style="color: ${color}"> -> </span>${to.name}`;
+          return `${from.name}<span style="color: ${color}"> &#10230; </span>${to.name}`;
         }).join("<br/>");
     }
     if (this.patchCableData) {
