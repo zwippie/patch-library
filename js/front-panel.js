@@ -288,14 +288,28 @@ class FrontPanel {
       // console.log("mousedown", pos, e)
       this.connectors.forEach(circle => {
         if (this.isIntersect(pos, circle, this.connectorOptions.cellRadius)) {
-          const inOut = circle.input ? "input" : "output";
+          // const inOut = circle.input ? "input" : "output";
           // console.log("mousedown " + circle.name + " (" + inOut + ") at " + circle.row + ", " + circle.col);
-          this.dragging = true;
-          this.dragFromIdx = circle.idx;
-          this.dragFromInput = circle.input;
-          this.dragToX = pos.x;
-          this.dragToY = pos.y;
-          this.dragColor = this.nextCableColor();
+          if (e.which == 2) {
+            // remove an existing connection
+            this.dragging = false;
+            const foundIdx = this.connections.findIndex(connection => {
+              return (circle.input && connection.to === circle.idx) ||
+                     (!circle.input && connection.from === circle.idx);
+            });
+            if (foundIdx > -1) {
+              this.connections.splice(foundIdx, 1);
+            }
+            this.updatePatchCableOutput();
+          }
+          else {
+            this.dragging = true;
+            this.dragFromIdx = circle.idx;
+            this.dragFromInput = circle.input;
+            this.dragToX = pos.x;
+            this.dragToY = pos.y;
+            this.dragColor = this.nextCableColor();
+          }
           this.requestRedraw()
         }
       });
@@ -333,7 +347,7 @@ class FrontPanel {
       })
 
       // e.preventDefault()
-    }, false);
+    }, false)
 
     this.canvas.addEventListener("mousemove", (e) => {
       if (!this.dragging && !this.turning) return;
@@ -371,17 +385,18 @@ class FrontPanel {
       if (this.dragging) {
         this.connectors.forEach(circle => {
           if (this.isIntersect(pos, circle, this.connectorOptions.cellRadius)) {
-            const inOut = circle.input ? "input" : "output";
+            // const inOut = circle.input ? "input" : "output";
+            const fromIdx = circle.input ? this.dragFromIdx : circle.idx;
+            const toIdx = circle.input ? circle.idx : this.dragFromIdx;
             if (this.dragFromInput != circle.input) {
               // if this connection already exists, remove it
               const foundIdx = this.connections.findIndex(connection => {
-                return (connection.from === this.dragFromIdx && connection.to === circle.idx) ||
-                       (connection.from === circle.idx && connection.to === this.dragFromIdx);
+                return (connection.from === fromIdx && connection.to === toIdx);
               });
               if (foundIdx > -1) {
                 this.connections.splice(foundIdx, 1);
               } else {
-                this.connections.push({from: this.dragFromIdx, to: circle.idx, color: this.dragColor});
+                this.connections.push({from: fromIdx, to: toIdx, color: this.dragColor});
               }
               this.updatePatchCableOutput();
             }
