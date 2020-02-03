@@ -230,7 +230,8 @@ class FrontPanel {
           const [fromIdx, toIdx] = [connection.from, connection.to].sort((a, b) => b - a)
           const from = this.connectors[fromIdx];
           const to = this.connectors[toIdx];
-          return from.name + " -> " + to.name;
+          const color = connection.color;
+          return `${from.name}<span style="color: ${color}"> &#10230; </span>${to.name}`;
         }).join("<br/>");
     }
     if (this.patchCableData) {
