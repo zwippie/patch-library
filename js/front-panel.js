@@ -396,6 +396,11 @@ class FrontPanel {
       }
     }, false)
 
+    this.canvas.addEventListener("mouseleave", (e) => {
+      this.dragging = false;
+      this.turning = false;
+    }, false)
+
     // Touch event handlers
 
     this.canvas.addEventListener("touchstart", (e) => {
