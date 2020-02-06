@@ -14,7 +14,7 @@ const CONNECTORS = [
   {idx: 1, col: 1, row: 0, x: 390, y: 110, name: "OSC FM", input: true},
   {idx: 2, col: 2, row: 0, x: 457, y: 110, name: "OSC MOD", input: true},
   {idx: 3, col: 3, row: 0, x: 525, y: 110, name: "VCF CUTOFF", input: true},
-  {idx: 4, col: 4, row: 0, x: 590, y: 110, name: "VCF RES.", input: true},
+  {idx: 4, col: 4, row: 0, x: 590, y: 110, name: "VCF RES", input: true},
   {idx: 5, col: 5, row: 0, x: 655, y: 110, name: "MIX 1", input: true},
   {idx: 6, col: 6, row: 0, x: 720, y: 110, name: "MIX 2", input: true},
   {idx: 7, col: 7, row: 0, x: 785, y: 110, name: "VC MIX", input: true},
