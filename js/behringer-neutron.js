@@ -11,7 +11,7 @@ const CONNECTORS = [
   {idx: 4, col: 0, row: 4, x: 1215, y: 283, name: "E.GATE1", input: true},
   {idx: 5, col: 0, row: 5, x: 1215, y: 333, name: "LFO RATE", input: true},
   {idx: 6, col: 0, row: 6, x: 1215, y: 384, name: "ATT1 IN", input: true},
-  {idx: 7, col: 0, row: 7, x: 1215, y: 434, name: "SUM 1(A)", input: true},
+  {idx: 7, col: 0, row: 7, x: 1215, y: 434, name: "SUM 1[A]", input: true},
   {idx: 8, col: 1, row: 0, x: 1268, y: 81, name: "OSC2", input: true},
   {idx: 9, col: 1, row: 1, x: 1268, y: 131, name: "SHAPE2", input: true},
   {idx: 10, col: 1, row: 2, x: 1268, y: 182, name: "FREQ MOD", input: true},
@@ -19,7 +19,7 @@ const CONNECTORS = [
   {idx: 12, col: 1, row: 4, x: 1268, y: 283, name: "E.GATE2", input: true},
   {idx: 13, col: 1, row: 5, x: 1268, y: 333, name: "LFO SHAPE", input: true},
   {idx: 14, col: 1, row: 6, x: 1268, y: 384, name: "ATT1 CV", input: true},
-  {idx: 15, col: 1, row: 7, x: 1268, y: 434, name: "SUM 1(B)", input: true},
+  {idx: 15, col: 1, row: 7, x: 1268, y: 434, name: "SUM 1[B]", input: true},
   {idx: 16, col: 2, row: 0, x: 1321, y: 81, name: "OSC1+2", input: true},
   {idx: 17, col: 2, row: 1, x: 1321, y: 131, name: "PW1", input: true},
   {idx: 18, col: 2, row: 2, x: 1321, y: 182, name: "RES", input: true},
@@ -27,7 +27,7 @@ const CONNECTORS = [
   {idx: 20, col: 2, row: 4, x: 1321, y: 283, name: "S&H IN", input: true},
   {idx: 21, col: 2, row: 5, x: 1321, y: 333, name: "LFO TRIG", input: true},
   {idx: 22, col: 2, row: 6, x: 1321, y: 384, name: "ATT2 IN", input: true},
-  {idx: 23, col: 2, row: 7, x: 1321, y: 434, name: "SUM 2(A)", input: true},
+  {idx: 23, col: 2, row: 7, x: 1321, y: 434, name: "SUM 2[A]", input: true},
   {idx: 24, col: 3, row: 0, x: 1374, y: 81, name: "INVERT IN", input: true},
   {idx: 25, col: 3, row: 1, x: 1374, y: 131, name: "PW2", input: true},
   {idx: 26, col: 3, row: 2, x: 1374, y: 182, name: "OD IN", input: true},
@@ -35,7 +35,7 @@ const CONNECTORS = [
   {idx: 28, col: 3, row: 4, x: 1374, y: 283, name: "S&H CLOCK", input: true},
   {idx: 29, col: 3, row: 5, x: 1374, y: 333, name: "MULT", input: true},
   {idx: 30, col: 3, row: 6, x: 1374, y: 384, name: "SLEW IN", input: true},
-  {idx: 31, col: 3, row: 7, x: 1374, y: 434, name: "SUM 2(B)", input: true},
+  {idx: 31, col: 3, row: 7, x: 1374, y: 434, name: "SUM 2[B]", input: true},
   {idx: 32, col: 4, row: 0, x: 1426, y: 81, name: "OSC1", input: false},
   {idx: 33, col: 4, row: 1, x: 1426, y: 131, name: "VCF1", input: false},
   {idx: 34, col: 4, row: 2, x: 1426, y: 182, name: "VCA", input: false},
@@ -208,7 +208,8 @@ export class BehringerNeutron extends FrontPanel {
         knobs: {
           large: "/images/neutron/neutron-knob-large.png",
           medium: "/images/neutron/neutron-knob-medium.png",
-          small: "/images/neutron/neutron-knob-small-2.png"
+          small: "/images/neutron/neutron-knob-small-2.png",
+          none: "/images/neutron/neutron-knob-none.png"
         },
         buttons: {
           off: "/images/neutron/neutron-button-off.png",
