@@ -27,16 +27,16 @@ const KNOBS = [
   {idx: 3, x: 98, y: 468, type: "small", name: "MOD DEPTH"},
   {idx: 4, x: 234, y: 468, type: "small", name: "LFO RATE"},
 
-  {idx: 5, x: 405, y: 166, type: "medium", name: "OSC1 RANGE"},
-  {idx: 6, x: 403, y: 299, type: "medium", name: "OSC2 RANGE"},
-  {idx: 7, x: 405, y: 432, type: "medium", name: "OSC3 RANGE"},
+  {idx: 5, x: 408, y: 171, type: "medium", name: "OSC1 RANGE"},
+  {idx: 6, x: 408, y: 304, type: "medium", name: "OSC2 RANGE"},
+  {idx: 7, x: 408, y: 436, type: "medium", name: "OSC3 RANGE"},
 
   {idx: 8, x: 514, y: 299, type: "large", name: "OSC2 FREQ"},
   {idx: 9, x: 514, y: 432, type: "large", name: "OSC3 FREQ"},
 
-  {idx: 10, x: 622, y: 166, type: "medium", name: "OSC1 WAVEFORM"},
-  {idx: 11, x: 622, y: 299, type: "medium", name: "OSC2 WAVEFORM"},
-  {idx: 12, x: 622, y: 432, type: "medium", name: "OSC3 WAVEFORM"},
+  {idx: 10, x: 622, y: 171, type: "medium", name: "OSC1 WAVEFORM"},
+  {idx: 11, x: 622, y: 304, type: "medium", name: "OSC2 WAVEFORM"},
+  {idx: 12, x: 622, y: 435, type: "medium", name: "OSC3 WAVEFORM"},
 
   {idx: 13, x: 732, y: 166, type: "small", name: "OSC1 VOLUME"},
   {idx: 14, x: 732, y: 299, type: "small", name: "OSC2 VOLUME"},
@@ -62,7 +62,7 @@ const KNOBS = [
 ]
 const KNOB_TYPES = {
   large: {radius: 55, limit: 304},
-  medium: {radius: 45, limit: 160},
+  medium: {radius: 45, limit: 145},
   small: {radius: 30, limit: 300},
 }
 const TOGGLES = [
@@ -109,13 +109,13 @@ const TOGGLE_HEIGHT = 40
 const initialKnobValues = function() {
   let knobValues = Array(29).fill(150)
   // These range and waveform knobs are actually limited to certain values. Ignore that now...
-  knobValues[5] = 160
-  knobValues[6] = 160
-  knobValues[7] = 160
+  knobValues[5] = 145
+  knobValues[6] = 145
+  knobValues[7] = 145
 
-  knobValues[10] = 160
-  knobValues[11] = 160
-  knobValues[12] = 160
+  knobValues[10] = 145
+  knobValues[11] = 145
+  knobValues[12] = 145
 
   return knobValues
 }
