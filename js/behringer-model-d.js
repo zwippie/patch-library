@@ -62,7 +62,7 @@ const KNOBS = [
 ]
 const KNOB_TYPES = {
   large: {radius: 55, limit: 304},
-  medium: {radius: 45, limit: 160},
+  medium: {radius: 45, limit: 160, positions: 6},
   small: {radius: 30, limit: 300},
 }
 const TOGGLES = [
