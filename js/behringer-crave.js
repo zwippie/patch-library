@@ -85,8 +85,8 @@ const TOGGLES = [
 const TOGGLE_TYPES = {
   twoway: {values: ["left", "right"]}
 }
-const TOGGLE_WIDTH = 43
-const TOGGLE_HEIGHT = 41
+const TOGGLE_WIDTH = 30
+const TOGGLE_HEIGHT = 30
 
 export class BehringerCrave extends FrontPanel {
   constructor() {

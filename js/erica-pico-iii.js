@@ -112,8 +112,8 @@ const TOGGLE_TYPES = {
   vertthree: {values: ["up", "center", "down"]}
 }
 
-const TOGGLE_WIDTH = 25
-const TOGGLE_HEIGHT = 25
+const TOGGLE_WIDTH = 44
+const TOGGLE_HEIGHT = 38
 
 const initialKnobValues = function() {
   let knobValues = Array(31).fill(140)
