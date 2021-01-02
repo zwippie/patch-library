@@ -320,7 +320,7 @@ class FrontPanel {
 
       this.buttons.forEach(button => {
         const circle = {x: button.x + this.buttonOptions.width / 2, y: button.y + this.buttonOptions.height / 2}
-        if (this.isIntersect(pos, circle, this.buttonOptions.width)) {
+        if (this.isIntersect(pos, circle, Math.max(this.buttonOptions.width, this.buttonOptions.height) / 2)) {
           // Call handler in subclass
           this.onButtonClick(button)
           this.updatePatchCableOutput()
@@ -329,8 +329,15 @@ class FrontPanel {
       })
 
       this.toggles.forEach(toggle => {
-        const circle = {x: toggle.x + this.toggleOptions.width / 2, y: toggle.y + this.toggleOptions.height / 2}
-        if (this.isIntersect(pos, circle, this.toggleOptions.width)) {
+        let {width, height} = this.toggleOptions.types[toggle.type]
+
+        if (width === undefined || height === undefined) {
+          width = this.toggleOptions.width
+          height = this.toggleOptions.height
+        }
+
+        const circle = {x: toggle.x + width / 2, y: toggle.y + height / 2}
+        if (this.isIntersect(pos, circle, Math.max(width, height) / 2)) {
           this.onToggleClick(toggle)
           this.updatePatchCableOutput()
           this.requestRedraw()

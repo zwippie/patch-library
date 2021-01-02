@@ -71,8 +71,8 @@ const TOGGLES = [
 const TOGGLE_TYPES = {
   twoway: {values: ["off", "on"]}
 }
-const TOGGLE_WIDTH = 20
-const TOGGLE_HEIGHT = 20
+const TOGGLE_WIDTH = 27
+const TOGGLE_HEIGHT = 27
 
 const initialKnobValues = function() {
   let knobValues = Array(18).fill(0)
