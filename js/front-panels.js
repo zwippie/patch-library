@@ -7,6 +7,7 @@ import { BehringerModelD } from "./behringer-model-d"
 import { MakeNoise0Coast } from "./make-noise-0-coast"
 import { BehringerCrave } from "./behringer-crave"
 import { EricaPicoIII } from "./erica-pico-iii"
+import { KorgMs20 } from "./korg-ms-20"
 
 export default {
   "behringer-neutron": BehringerNeutron,
@@ -15,5 +16,6 @@ export default {
   "behringer-model-d": BehringerModelD,
   "make-noise-0-coast": MakeNoise0Coast,
   "behringer-crave": BehringerCrave,
-  "erica-pico-iii": EricaPicoIII
+  "erica-pico-iii": EricaPicoIII,
+  "korg-ms-20": KorgMs20,
 }
