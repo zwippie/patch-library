@@ -15,7 +15,7 @@ class FrontPanel {
   constructor(options) {
     const {deviceName, canvasWidth, canvasHeight, buttons, knobs, connectors, toggles,
       lights, initialValues, buttonOptions, connectorOptions, knobTypes, toggleOptions,
-      lightOptions, images} = options
+      lightOptions, images, sliders, sliderTypes} = options
 
     // The canvas, input elements and images
     this.canvas = document.querySelector(`canvas[data-device='${deviceName}']`);
@@ -32,8 +32,10 @@ class FrontPanel {
     this.buttons = buttons || []
     this.toggles = toggles || []
     this.lights = lights || []
+    this.sliders = sliders || []
 
     this.knobTypes = knobTypes
+    this.sliderTypes = sliderTypes
     this.buttonOptions = buttonOptions
     this.connectorOptions = connectorOptions
     this.toggleOptions = toggleOptions
@@ -70,6 +72,11 @@ class FrontPanel {
     this.turnNewValue;
     this.turnPreviousY;
 
+    // Slider sliding
+    this.sliding = false;
+    this.slideSliderIdx;
+    this.slidePreviousY;
+
     // Current patch data
     // this.connections = [
     //   {from: 0, to: 36, color: CABLE_COLORS[9]},
@@ -79,6 +86,7 @@ class FrontPanel {
     this.knobValues = initialValues.knobValues || []
     this.buttonValues = initialValues.buttonValues || []
     this.toggleValues = initialValues.toggleValues || []
+    this.sliderValues = initialValues.sliderValues || []
     this.lightValues = initialValues.lightValues || {}
 
 
@@ -111,6 +119,7 @@ class FrontPanel {
     this.buttons.forEach(button => this.drawButton(button))
     this.toggles.forEach(toggle => this.drawToggle(toggle))
     this.connections.forEach(connection => this.drawConnection(connection))
+    this.sliders.forEach(slider => this.drawSlider(slider))
     this.drawLights()
 
     if (this.dragging) {
@@ -119,7 +128,7 @@ class FrontPanel {
       this.drawCable(from, to, this.dragColor);
     }
 
-    if (this.dragging || this.turning) {
+    if (this.dragging || this.turning || this.sliding) {
       this.requestRedraw()
     }
   }
@@ -178,6 +187,17 @@ class FrontPanel {
 
     this.ctx.save()
     this.ctx.drawImage(toggleImage, toggle.x, toggle.y)
+    this.ctx.restore()
+  }
+
+  drawSlider(slider) {
+    const value = this.sliderValues[slider.idx]
+    const sliderImage = this.images.sliders[slider.type]
+    if (!sliderImage) { return }
+
+    this.ctx.save();
+    this.ctx.translate(slider.x, slider.y - value);
+    this.ctx.drawImage(sliderImage, -sliderImage.width / 2, -sliderImage.height / 2);
     this.ctx.restore()
   }
 
@@ -337,11 +357,21 @@ class FrontPanel {
         }
       })
 
+      this.sliders.forEach(slider => {
+        const sliderType = this.sliderTypes[slider.type];
+        if (this.isIntersect(pos, {x: slider.x, y: slider.y - this.sliderValues[slider.idx]}, sliderType.radius)) {
+          this.sliding = true;
+          this.slideSliderIdx = slider.idx;
+          this.slidePreviousY = pos.y;
+          this.requestRedraw()
+        }
+      })
+
       // e.preventDefault()
     }, false);
 
     this.canvas.addEventListener("mousemove", (e) => {
-      if (!this.dragging && !this.turning) return;
+      if (!this.dragging && !this.turning && !this.sliding) return;
       // const pos = {x: e.pageX, y: e.pageY};
       const pos = this.getMousePos(this.canvas, e)
       // console.log("mousemove", pos, e)
@@ -367,11 +397,20 @@ class FrontPanel {
         this.turnPreviousY = pos.y
         // console.log(this.knobValues[this.turnKnobIdx])
       }
+
+      if (this.sliding) {
+        const slider = this.sliders[this.slideSliderIdx]
+        const sliderType= this.sliderTypes[slider.type]
+        this.sliderValues[this.slideSliderIdx] += this.slidePreviousY - pos.y
+        this.sliderValues[this.slideSliderIdx] = Math.max(this.sliderValues[this.slideSliderIdx], 0)
+        this.sliderValues[this.slideSliderIdx] = Math.min(this.sliderValues[this.slideSliderIdx], sliderType.limit)
+        this.slidePreviousY = pos.y
+      }
       // e.preventDefault()
     }, false)
 
     this.canvas.addEventListener("mouseup", (e) => {
-      if (!this.dragging && !this.turning) return;
+      if (!this.dragging && !this.turning && !this.sliding) return;
       const pos = {x: this.dragToX, y: this.dragToY}
       if (this.dragging) {
         this.connectors.forEach(circle => {
@@ -399,11 +438,16 @@ class FrontPanel {
         this.updatePatchCableOutput()
         this.turning = false;
       }
+      if (this.sliding) {
+        this.updatePatchCableOutput()
+        this.sliding = false;
+      }
     }, false)
 
     this.canvas.addEventListener("mouseleave", (e) => {
       this.dragging = false;
       this.turning = false;
+      this.sliding = false;
     }, false)
 
     // Touch event handlers
