@@ -41,6 +41,7 @@ h1 {
 
 .row-front-panel {
   width: 1700px;
+  width: 100%; /* find fix for mobile, when adding new patch */
 }
 
 /* Center when larger than frontpanel image */
