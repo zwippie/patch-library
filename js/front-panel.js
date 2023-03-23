@@ -312,8 +312,8 @@ class FrontPanel {
           this.turning = true;
           this.turnKnobIdx = knob.idx;
           this.turnPreviousY = pos.y;
-          this.turnOldValue = knob.value;
-          this.turnNewValue = knob.value;
+          this.turnOldValue = this.knobValues[knob.idx];
+          this.turnNewValue = this.knobValues[knob.idx];
           this.requestRedraw()
         }
       })
@@ -359,12 +359,19 @@ class FrontPanel {
       }
 
       if (this.turning) {
-        const knob = this.knobs[this.turnKnobIdx]
-        const knobType= this.knobTypes[knob.type]
-        this.knobValues[this.turnKnobIdx] += (this.turnPreviousY - pos.y) * 2
-        this.knobValues[this.turnKnobIdx] = Math.max(this.knobValues[this.turnKnobIdx], 0)
-        this.knobValues[this.turnKnobIdx] = Math.min(this.knobValues[this.turnKnobIdx], knobType.limit)
-        this.turnPreviousY = pos.y
+        const knob = this.knobs[this.turnKnobIdx];
+        const knobType = this.knobTypes[knob.type];
+        let value = this.knobValues[this.turnKnobIdx] + (this.turnPreviousY - pos.y) * 2;
+        this.turnNewValue += (this.turnPreviousY - pos.y) * 2;
+
+        if (knobType.positions !== undefined) {
+          const step = (knobType.limit / (knobType.positions - 1));
+          value = Math.round(this.turnNewValue / step) * step;
+        }
+        
+        this.knobValues[this.turnKnobIdx] = Math.max(value, 0);
+        this.knobValues[this.turnKnobIdx] = Math.min(this.knobValues[this.turnKnobIdx], knobType.limit);
+        this.turnPreviousY = pos.y;
         // console.log(this.knobValues[this.turnKnobIdx])
       }
       // e.preventDefault()
