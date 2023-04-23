@@ -81,6 +81,11 @@ class FrontPanel {
     this.toggleValues = initialValues.toggleValues || []
     this.lightValues = initialValues.lightValues || {}
 
+    // make deep copies of default values
+    this.knobDefaults = Object.assign([], this.knobValues)
+    this.buttonDefaults = Object.assign([], this.buttonValues)
+    this.toggleDefaults = Object.assign([], this.toggleValues)
+    this.lightDefaults = Object.assign({}, this.lightValues);
 
     // Init
     this.loadPatchData();
@@ -293,14 +298,28 @@ class FrontPanel {
       // console.log("mousedown", pos, e)
       this.connectors.forEach(circle => {
         if (this.isIntersect(pos, circle, this.connectorOptions.cellRadius)) {
-          const inOut = circle.input ? "input" : "output";
+          // const inOut = circle.input ? "input" : "output";
           // console.log("mousedown " + circle.name + " (" + inOut + ") at " + circle.row + ", " + circle.col);
-          this.dragging = true;
-          this.dragFromIdx = circle.idx;
-          this.dragFromInput = circle.input;
-          this.dragToX = pos.x;
-          this.dragToY = pos.y;
-          this.dragColor = this.nextCableColor();
+          if (e.which == 2) {
+            // remove an existing connection
+            this.dragging = false;
+            const foundIdx = this.connections.findIndex(connection => {
+              return (circle.input && connection.to === circle.idx) ||
+                     (!circle.input && connection.from === circle.idx);
+            });
+            if (foundIdx > -1) {
+              this.connections.splice(foundIdx, 1);
+            }
+            this.updatePatchCableOutput();
+          }
+          else {
+            this.dragging = true;
+            this.dragFromIdx = circle.idx;
+            this.dragFromInput = circle.input;
+            this.dragToX = pos.x;
+            this.dragToY = pos.y;
+            this.dragColor = this.nextCableColor();
+          }
           this.requestRedraw()
         }
       });
@@ -308,12 +327,18 @@ class FrontPanel {
       this.knobs.forEach(knob => {
         const knobType = this.knobTypes[knob.type];
         if (this.isIntersect(pos, knob, knobType.radius)) {
-          // console.log("mousedown" + knob.name);
-          this.turning = true;
-          this.turnKnobIdx = knob.idx;
-          this.turnPreviousY = pos.y;
-          this.turnOldValue = knob.value;
-          this.turnNewValue = knob.value;
+           console.log("mousedown" + knob.name);
+          if (e.which == 2) {
+            this.turning = false;
+            this.knobValues[knob.idx] = this.knobDefaults[knob.idx];
+          }
+          else {
+            this.turning = true;
+            this.turnKnobIdx = knob.idx;
+            this.turnPreviousY = pos.y;
+            this.turnOldValue = knob.value;
+            this.turnNewValue = knob.value;
+          }
           this.requestRedraw()
         }
       })
@@ -321,8 +346,14 @@ class FrontPanel {
       this.buttons.forEach(button => {
         const circle = {x: button.x + this.buttonOptions.width / 2, y: button.y + this.buttonOptions.height / 2}
         if (this.isIntersect(pos, circle, this.buttonOptions.width)) {
-          // Call handler in subclass
-          this.onButtonClick(button)
+          if (e.which == 2) {
+            this.buttonValues[button.idx] = this.buttonDefaults[button.idx];
+            this.lightValues[button.name] = this.lightDefaults[button.name];
+          }
+          else {
+            // Call handler in subclass
+            this.onButtonClick(button)
+          }
           this.updatePatchCableOutput()
           this.requestRedraw()
         }
@@ -331,14 +362,19 @@ class FrontPanel {
       this.toggles.forEach(toggle => {
         const circle = {x: toggle.x + this.toggleOptions.width / 2, y: toggle.y + this.toggleOptions.height / 2}
         if (this.isIntersect(pos, circle, this.toggleOptions.width)) {
-          this.onToggleClick(toggle)
+          if (e.which == 2) {
+            this.toggleValues[toggle.idx] = this.toggleDefaults[toggle.idx];
+          }
+          else {
+            this.onToggleClick(toggle)
+          }
           this.updatePatchCableOutput()
           this.requestRedraw()
         }
       })
 
       // e.preventDefault()
-    }, false);
+    }, false)
 
     this.canvas.addEventListener("mousemove", (e) => {
       if (!this.dragging && !this.turning) return;
@@ -376,17 +412,18 @@ class FrontPanel {
       if (this.dragging) {
         this.connectors.forEach(circle => {
           if (this.isIntersect(pos, circle, this.connectorOptions.cellRadius)) {
-            const inOut = circle.input ? "input" : "output";
+            // const inOut = circle.input ? "input" : "output";
+            const fromIdx = circle.input ? this.dragFromIdx : circle.idx;
+            const toIdx = circle.input ? circle.idx : this.dragFromIdx;
             if (this.dragFromInput != circle.input) {
               // if this connection already exists, remove it
               const foundIdx = this.connections.findIndex(connection => {
-                return (connection.from === this.dragFromIdx && connection.to === circle.idx) ||
-                       (connection.from === circle.idx && connection.to === this.dragFromIdx);
+                return (connection.from === fromIdx && connection.to === toIdx);
               });
               if (foundIdx > -1) {
                 this.connections.splice(foundIdx, 1);
               } else {
-                this.connections.push({from: this.dragFromIdx, to: circle.idx, color: this.dragColor});
+                this.connections.push({from: fromIdx, to: toIdx, color: this.dragColor});
               }
               this.updatePatchCableOutput();
             }
